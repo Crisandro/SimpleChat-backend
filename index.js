@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 const corsOption = {
-    origin: "https://crisandro.github.io/SimpleChat-frontend/",
+    origin: "https://crisandro.github.io/SimpleChat-frontend",
     methods: ["GET", "POST"],
     credentials: true,
     optionsSuccessStatus: 200
