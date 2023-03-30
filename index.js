@@ -14,11 +14,10 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.set('trust proxy', 1)
-
 app.use(cookieSession({
     name: 'session',
     keys: ["crischatkey"],
-    // sameSite: 'none',
+    sameSite: 'none',
     // httpOnly: false,
     // proxy: true,
     // Cookie Options
@@ -61,12 +60,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     proxy: true,
-    // httpOnly: false,
+    httpOnly: false,
     sameSite: 'none',
     cookie: {
         secure: true, // required for cookies to work on HTTPS
         sameSite: 'none',
-        // httpOnly: false,
+        httpOnly: false,
     }
 }))
 
