@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 const corsOption = {
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET", "POST"],
     credentials: true,
     optionsSuccessStatus: 200
@@ -406,3 +406,4 @@ const port = process.env.PORT || 3001
 app.listen(port, ()=> {
     console.log("running on port 3001")
 })
+
