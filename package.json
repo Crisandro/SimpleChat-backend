@@ -21,6 +21,10 @@
     "express-session": "^1.17.3",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.22",
+    "undici": "^7.16.0",
     "uuid": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
