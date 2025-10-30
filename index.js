@@ -8,10 +8,15 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const cookieSession = require('cookie-session')
+const { fetch, Headers, Request, Response } = require('undici');
+global.fetch = fetch;
+global.Headers = Headers;
+global.Request = Request;
+global.Response = Response;
 const { createClient } = require('@supabase/supabase-js')
 
 const supabaseUrl = 'https://pmjvbpmtdwntpinsqach.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBtanZicG10ZHdudHBpbnNxYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE3MTc5NTcsImV4cCI6MjA3NzI5Mzk1N30.uKyhkf6XPncz70aH58Olpivv7QG4zBt6CWsyayAfcZk'
+const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 app.use(express.json())
