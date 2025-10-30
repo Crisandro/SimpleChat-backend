@@ -19,40 +19,47 @@ const supabaseUrl = 'https://pmjvbpmtdwntpinsqach.supabase.co'
 const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey)
 
+const corsOption = {
+  origin: ['http://localhost:3000', 'https://crisandro.github.io'],
+  credentials: true,
+  methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOption));
+app.options('*', cors(corsOption));
+
+
 app.use(express.json())
 app.use(cookieParser())
 
 app.set('trust proxy', 1)
 app.use(cookieSession({
-    name: 'session',
-    keys: ["crischatkey"],
-    maxAge: 24 * 60 * 60 * 1000 
-}))
+  name: 'sid',
+  keys: [process.env.SESSION_SECRET],
+  httpOnly: true,
+  secure: true,
+  sameSite: 'none',
+  maxAge: 1000 * 60 * 60 * 24 * 7,
+}));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json())
 
-const corsOption = {
-    origin: "*",
-    methods: ["GET", "POST"],
-    credentials: true,
-    optionsSuccessStatus: 200
-}
-app.use(cors(corsOption))
-
 app.use(session({
-    key: "user",
-    secret: "someRandomS3cr3ts",
-    resave: false,
-    saveUninitialized: false,
-    proxy: true,
-    sameSite: 'none',
-    cookie: {
-        secure: true, 
-        sameSite: 'none',
-    }
-}))
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+
+  cookie: {
+    httpOnly: true,
+    secure: true,         // required for SameSite=None
+    sameSite: 'none',     // allow cross-site
+    maxAge: 1000 * 60 * 60 * 24 * 7, // example: 7 days
+  },
+}));
 
 app.post('/api/register', cors(corsOption), async (req, res) => {
   const { firstname, lastname, username, password } = req.body
@@ -406,4 +413,3 @@ const port = process.env.PORT || 3001
 app.listen(port, ()=> {
     console.log("running on port 3001")
 })
-
